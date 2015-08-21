@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>用户控制</title>
+
+    <link rel="stylesheet" type="text/css" href="../3rd/bootstrap-3.3.5-dist/css/bootstrap.min.css"/>
+    <link href="../3rd/bootstrap-switch-master/dist/css/bootstrap3/bootstrap-switch.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../3rd/countdown/css/flipTimer.css">
+    <!--    <link href="../3rd/Flat-UI-master/dist/css/flat-ui.css" rel="stylesheet">-->
+
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <!--<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>-->
+    <script src="..\common\javascript\jquery\jquery-1.11.3.min.js"></script>
+    <script src="../3rd/bootstrap-switch-master/dist/js/bootstrap-switch.js"></script>
+    <script src="../3rd/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
+    <script src="../3rd/countdown/js/jquery.flipTimer.js"></script>
+    <!-- <script src="../3rd/Flat-UI-master/dist/js/flat-ui.min.js"></script>-->
+
+</head>
+<body>
+<div class="container">
+    <!-- Navbar -->
+    <nav class="navbar  navbar-inverse">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <p class="navbar-brand"><strong>智安</strong></p>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#home" data-toggle="tab">设备操作</a></li>
+                    <li><a href="#profile" data-toggle="tab">用户信息</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><p class="navbar-text">欢迎 使用 </p></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">Dropdown <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">用户信息</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">退出登录</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="home">
+
+            <div class="row">
+                <div class="col-xs-4">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">拥有设备</h3>
+                        </div>
+                        <div class="panel-body">
+                            <ul id="productList" class="nav nav-pills nav-stacked">
+                                <li role="presentation" class="active">
+                                    <a href="#addProduct" aria-controls="addProduct" role="tab"
+                                       data-toggle="tab">添加设备</a>
+                                </li>
+                                <li role="presentation">
+                                    <a href="#temp" aria-controls="temp" role="tab" data-toggle="tab">临时测试</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-6">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">操作设备</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div id="tabContent" class="tab-content">
+                                <div role="tabpanel" class="tab-pane active" id="addProduct">
+                                    <form id="addProductHTML" class="form-horizontal" onsubmit="return false;">
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">设备序列号:</label>
+
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" name="modelNumber"
+                                                       placeholder="请输入设备序列号" title="每个设备都有唯一序列号">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-offset-3 col-sm-9">
+                                                <button id="addProductBtn" type="button" class="btn btn-primary btn-lg">
+                                                    确定
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div role="tabpanel" class="tab-pane" id="temp">
+                                    <div class="well">
+                                        <p class="text-success">设备当前状态：运行中……</p>
+                                    </div>
+                                    <form id="operatorHTML" class="form-horizontal" onsubmit="return false;">
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">设备操作:</label>
+
+                                            <div class="col-sm-9">
+                                                <input type="checkbox" checked>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">定时开关:</label>
+
+                                            <div class="col-sm-9">
+                                                <input type="checkbox">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">定时时间:</label>
+
+                                            <div class="col-sm-9">
+                                                <input type="number" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-offset-3 col-sm-9">
+                                                <button type="submit" class="btn btn-primary btn-lg">确定</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <div class="dowebok">
+                                                <div class="hours"></div>
+                                                <div class="minutes"></div>
+                                                <div class="seconds"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div role="tabpanel" class="tab-pane" id="profile">
+            <h1>个人设置</h1>
+        </div>
+    </div>
+</div>
+</body>
+<script src="controller.js"></script>
+
+</html>

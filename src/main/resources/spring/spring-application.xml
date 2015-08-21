@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:annotation-config/>
+
+    <!--    &lt;!&ndash; 开启注解配置 &ndash;&gt;
+        <context:annotation-config/>
+
+        &lt;!&ndash; 扫描service层 &ndash;&gt;
+        &lt;!&ndash;<context:component-scan base-package="web.test.service.impl"/>&ndash;&gt;
+
+        &lt;!&ndash; 引入属性文件 &ndash;&gt;
+        <context:property-placeholder location="classpath:configuration/db_config.properties"/>-->
+
+    <bean id="tcpServerTest" class="server.test.TcpServerTest">
+    </bean>
+
+
+    <!-- 数据源 数据库连接池 -->
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+
+       <!-- <property name="driverClassName" value="${driverClassName}"/>
+        <property name="url" value="${url}"/>
+        <property name="username" value="${username}"/>
+        <property name="password" value="${password}"/>
+        &lt;!&ndash;initialSize: 初始化连接&ndash;&gt;
+        <property name="initialSize" value="${initialSize}"/>
+        &lt;!&ndash;maxActive: 最大连接数量&ndash;&gt;
+        <property name="maxActive" value="${maxActive}"/>
+        &lt;!&ndash;minIdle: 最小空闲连接&ndash;&gt;
+        <property name="minIdle" value="${minIdle}"/>
+        &lt;!&ndash;maxIdle: 最大空闲连接&ndash;&gt;
+        <property name="maxIdle" value="${maxIdle}"/>
+        -->
+
+        <property name="driverClassName" value="org.postgresql.Driver"/>
+        <property name="url" value="jdbc:postgresql://127.0.0.1:5432/ideatest"/>
+        <property name="username" value="postgres"/>
+        <property name="password" value="ideatest"/>
+        <!--initialSize: 初始化连接-->
+        <property name="initialSize" value="2"/>
+        <!--maxActive: 最大连接数量-->
+        <property name="maxActive" value="10"/>
+        <!--minIdle: 最小空闲连接-->
+        <property name="minIdle" value="2"/>
+        <!--maxIdle: 最大空闲连接-->
+        <property name="maxIdle" value="8"/>
+        <!--连接被泄露时是否打印 -->
+        <property name="logAbandoned" value="true"/>
+        <!--removeAbandoned: 是否自动回收超时连接-->
+        <property name="removeAbandoned" value="true"/>
+        <!--removeAbandonedTimeout: 超时时间(以秒数为单位)-->
+        <property name="removeAbandonedTimeout" value="10"/>
+        <!--maxWait: 超时等待时间以毫秒为单位 1000等于60秒-->
+        <property name="maxWait" value="500"/>
+        <!-- 在空闲连接回收器线程运行期间休眠的时间值,以毫秒为单位. -->
+        <property name="timeBetweenEvictionRunsMillis" value="10000"/>
+        <!--  在每次空闲连接回收器线程(如果有)运行时检查的连接数量 -->
+        <property name="numTestsPerEvictionRun" value="10"/>
+        <!-- 1000 * 60 * 30  连接在池中保持空闲而不被空闲连接回收器线程-->
+        <property name="minEvictableIdleTimeMillis" value="10000"/>
+        <!--<property name="validationQuery" value="SELECT NOW() FROM DUAL"/>-->
+    </bean>
+
+    <!-- mybatis -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="configLocation" value="classpath:spring/mybatis-config.xml"/>
+    </bean>
+    <bean id="userMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="mapperInterface" value="web.test.mapper.UserMapper"/>
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+    </bean>
+
+    <bean id="productMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="mapperInterface" value="web.test.mapper.ProductMapper"/>
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+    </bean>
+    <bean id="userProductRelMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="mapperInterface" value="web.test.mapper.UserProductRelMapper"/>
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+    </bean>
+
+    <bean id="productService" class="web.test.service.impl.ProductService"/>
+
+    <bean id="userProductRelService" class="web.test.service.impl.UserProductRelService"/>
+
+
+    <bean id="userService" class="web.test.service.impl.UserService">
+        <property name="userMapper" ref="userMapper"/>
+    </bean>
+    <bean id="userController" class="web.test.controller.UserController">
+        <property name="userService" ref="userService"/>
+    </bean>
+
+
+
+    <!--<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="web.test.mapper" />
+    </bean>-->
+
+</beans>
