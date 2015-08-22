@@ -20,6 +20,7 @@ public class Test1 {
 
         LOGGER.info("result: {}",bl);
         LOGGER.info("strings: {},{}",strings[0],strings[1]);
+        LOGGER.info("这是测试版本");
 
     }
 
